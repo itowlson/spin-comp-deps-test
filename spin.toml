@@ -1,0 +1,22 @@
+spin_manifest_version = 2
+
+[application]
+name = "spin-comp-deps-test"
+version = "0.1.0"
+authors = ["itowlson <ivan.towlson@fermyon.com>"]
+description = ""
+
+[[trigger.http]]
+route = "/..."
+component = "spin-comp-deps-test"
+
+[component.spin-comp-deps-test]
+source = "target/wasm32-wasi/release/spin_comp_deps_test.wasm"
+allowed_outbound_hosts = []
+# dependencies_inherit_configuration = true
+[component.spin-comp-deps-test.dependencies]
+# "vscode:example/types" = { registry = "registrytest-vfztdiyy.fermyon.app", package = "vscode:example", version = "0.0.1" }
+"vscode:example/types" = { path = "../vscode-wasm-component-model-sample/calculator-impl/target/wasm32-unknown-unknown/release/calculator_impl.wasm" }
+[component.spin-comp-deps-test.build]
+command = "cargo component build --release"
+watch = ["src/**/*.rs", "Cargo.toml"]
